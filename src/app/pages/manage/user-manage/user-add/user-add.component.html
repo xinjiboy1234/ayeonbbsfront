@@ -1,0 +1,85 @@
+<div class="body-container" nz-row nzType="flex" nzJustify="center">
+  <div nz-col nzLg="16" nzMd="16" nzXs="24" nzSm="24">
+    <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="username">用户名</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input nz-input formControlName="username" id="username">
+          <nz-form-explain *ngIf="validateForm.get('username').dirty && validateForm.get('username').errors">请填写用户名!</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="password" nzRequired>密码</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input nz-input type="password" id="password" formControlName="password" (ngModelChange)="updateConfirmValidator()">
+          <nz-form-explain *ngIf="validateForm.get('password').dirty && validateForm.get('password').errors">请填写密码!</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="checkPassword" nzRequired>确认密码</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input nz-input type="password" formControlName="checkPassword" id="checkPassword">
+          <nz-form-explain *ngIf="validateForm.get('checkPassword').dirty && validateForm.get('checkPassword').errors">
+            <ng-container *ngIf="validateForm.get('checkPassword').hasError('required')">
+              请确认密码!
+            </ng-container>
+            <ng-container *ngIf="validateForm.get('checkPassword').hasError('confirm')">
+              2次输入密码不匹配!
+            </ng-container>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="nickname" nzRequired>
+          <span>
+            昵称
+            <i nz-icon nz-tooltip nzTitle="网络虚拟名称" type="question-circle" theme="outline"></i>
+          </span>
+        </nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input nz-input id="nickname" formControlName="nickname">
+          <nz-form-explain *ngIf="validateForm.get('nickname').dirty && validateForm.get('nickname').errors">请输入昵称!</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="category">发贴板块</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <nz-select [nzMaxTagCount]="5" [nzMaxTagPlaceholder]="tagPlaceHolder" formControlName="category"  nzMode="multiple" nzPlaceHolder="发贴板块">
+            <nz-option nzLabel="a" nzValue="a"></nz-option>
+            <nz-option nzLabel="ac" nzValue="ac"></nz-option>
+          </nz-select>
+          <ng-template #tagPlaceHolder let-selectedList>
+            等...
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="manageCategory">管理板块</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <nz-select [nzMaxTagCount]="5" [nzMaxTagPlaceholder]="tagPlaceHolder" formControlName="manageCategory" 
+             nzMode="multiple" nzPlaceHolder="管理板块">
+            <nz-option nzLabel="a" nzValue="a"></nz-option>
+            <nz-option nzLabel="ac" nzValue="ac"></nz-option>
+          </nz-select>
+          <ng-template #tagPlaceHolder let-selectedList>
+            等...
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="isSupperManager">是否超级管理员</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <nz-select nzPlaceHolder="是否超级管理员" formControlName="isSupperManager">
+            <nz-option nzValue="100" nzLabel="是"></nz-option>
+            <nz-option nzValue="200" nzLabel="否"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item style="margin-bottom:8px;">
+        <nz-form-control>
+          <button nz-button nzType="primary" style="padding: 0px 36px;">提交</button>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </div>
+</div>

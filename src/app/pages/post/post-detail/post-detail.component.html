@@ -1,0 +1,24 @@
+<div class="post-detail-zone">
+  <div nz-row  class="post-content">
+    <h3 class="post-title">{{ post.postTitle }}</h3>
+    <div class="author-info-zone">分类:&nbsp;&nbsp;
+      <nz-tag nzColor="green">{{post.secondCategory.secondCategoryName}}</nz-tag> 
+      {{post.author.nickName}} &nbsp;&nbsp;于 {{post.createDate | date: "yyyy-MM-dd HH:mm:ss"}} 
+      &nbsp;&nbsp;发布&nbsp;&nbsp;&nbsp;
+      <i nz-icon type="like-o" *ngIf="post.postGood?.goodsId <= 0 " (click)="postGoodAdd(post.postId)"></i>
+      <i nz-icon type="like" *ngIf="post.postGood?.goodsId > 0" [nzTheme]="'fill'" (click)="postGoodDelete(post.postGood)"></i>
+          {{post.postGoodCount}}
+      <nz-divider nzType="vertical"></nz-divider>
+      <i nz-icon type="message" class="content-bottm-badge"></i> {{post.replyCount}}
+      <nz-divider nzType="vertical"></nz-divider>
+      <i nz-icon type="eye" class="content-bottm-badge"></i> {{post.watch}}
+    </div>
+    <div [innerHTML]="post.postContent | sanitizeHtml"></div>
+  </div>
+  <div class="postdetial-reply-zone">
+    <div>
+      <h4 class="reply-zone-title">评论区</h4>
+    </div>
+    <app-reply-list *ngIf="post.postId > 0" [postId]="post.postId"></app-reply-list>
+  </div>
+</div>

@@ -1,0 +1,49 @@
+<div class="user-login-zone">
+  <div nz-row nzType="flex" nzJustify="center">
+    <div class="user-login-container" nz-col nzSpan="8">
+      <div nz-row nzType="flex" nzJustify="center">
+        <div nz-col nzSpan="16">
+          <div class="user-login-title">
+            <h3>登录</h3>
+          </div>
+          <div class="user-login-loginid">
+            <nz-input-group [nzSuffix]="loginIdsuffixTemplate" [nzPrefix]="loginIdprefixTemplate">
+              <input type="text" nz-input placeholder="用户名" [(ngModel)]="userInfo.loginId" class="loginid" required>
+            </nz-input-group>
+            <ng-template #loginIdprefixTemplate><i nz-icon type="user"></i></ng-template>
+            <ng-template #loginIdsuffixTemplate><i nz-icon type="close" (click)="userInfo.loginId=null" *ngIf="userInfo.loginId"></i></ng-template>
+          </div>
+          <div class="user-login-password">
+            <nz-input-group [nzSuffix]="passWordsuffixTemplate" [nzPrefix]="passWordprefixTemplate">
+              <input type="password" nz-input placeholder="密码" [(ngModel)]="userInfo.password" class="password" required>
+            </nz-input-group>
+            <ng-template #passWordprefixTemplate><i nz-icon type="lock"></i></ng-template>
+            <ng-template #passWordsuffixTemplate><i nz-icon type="close" (click)="userInfo.password=null" *ngIf="userInfo.password"></i></ng-template>
+          </div>
+          <div class="user-login-button-container">
+            <button nz-button nzType="primary" class="login-button" nzSize="large" (click)="doLogin()">登录</button>
+          </div>
+          <div class="forgetpasswordarea">
+            <a (click)="forgetPassword()">忘记密码</a>
+          </div>
+        </div>
+      </div>
+      <nz-modal [(nzVisible)]="isVisible" nzTitle="发送初始密码" [nzFooter]="modalFooter" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+          <nz-spin nzTip="Loading..." [nzSpinning]="isSpinning">
+        <div nz-row nzType="flex" nzJustify="center">
+          <div nz-col nzSpan="16">
+            <input nz-input id="loginId" name="loginId" placeholder="用户名" [(ngModel)]="loginId" nzrequired>
+          </div>
+          <div style="width: 60%; color: #b0b0b0">
+            <span>* 填写用户名后，系统将初始密码发到注册邮箱，获取到密码后请自行修改!</span>
+          </div>
+        </div>
+        <ng-template #modalFooter>
+          <button nz-button nzType="primary" nzSize="small" (click)="handleOk()">确定</button>
+          <button nz-button nzType="default" nzSize="small" (click)="handleCancel()">取消</button>
+        </ng-template>
+        </nz-spin>
+      </nz-modal>
+    </div>
+  </div>
+</div>

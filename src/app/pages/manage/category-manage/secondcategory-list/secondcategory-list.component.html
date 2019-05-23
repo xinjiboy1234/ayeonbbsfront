@@ -1,0 +1,93 @@
+<div class="body-container">
+  <div style="margin-bottom: 16px;">
+    <div>
+      <form nz-form [formGroup]="validateForm" [nzLayout]="'inline'" class="ant-advanced-search-form">
+        <nz-form-item>
+          <nz-form-label nzFor="categoryName">分类名称</nz-form-label>
+          <nz-form-control>
+            <input nz-input placeholder="分类名称" formControlName="categoryName" >
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label nzFor="categoryStatus">状态</nz-form-label>
+          <nz-form-control>
+            <nz-select [nzAllowClear]="true"
+                formControlName="categoryStatus"  class="select-control-style"
+                nzPlaceHolder="状态">
+              <nz-option nzLabel="发布" nzValue="1"></nz-option>
+              <nz-option nzLabel="删除" nzValue="3"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+        <div nz-row>
+          <div nz-col [nzSpan]="24" style="text-align: left;">
+            <button nz-button [nzType]="'primary'" nzSize="small" class="inquery-panel-btn" 
+                  (click)="showModal()">添加</button>
+            <button nz-button [nzType]="'primary'"  nzSize="small" class="inquery-panel-btn" (click)="inQuery()">查询</button>
+            <!-- <button nz-button [nzType]="'primary'"  nzSize="small" class="inquery-panel-btn">删除</button> -->
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- 添加分类模块 -->
+    <nz-modal [(nzVisible)]="isVisible" nzTitle="添加二级分类" [nzFooter]="modalFooter" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+      <div nz-row nzType="flex" nzJustify="center">
+        <div nz-col nzSpan="16">
+          <nz-select name="value" nzPlaceHolder="一级分类" style="width:100%;margin-bottom: 10px;" class="formcontrol-select-style" [(ngModel)]="secondCategory.firstCategory.firstCategoryId">
+            <nz-option *ngFor="let item of firstCategoryViewModel.firstCategories" [nzLabel]="item.firstCategoryName" [nzValue]="item.firstCategoryId"></nz-option>
+          </nz-select>
+          <input nz-input id="secondCategoryName" name="secondCategoryName" placeholder="分类名称" nzrequired [(ngModel)]="secondCategory.secondCategoryName">
+        </div>
+      </div>
+      <ng-template #modalFooter>
+        <button nz-button nzType="primary" nzSize="small" (click)="handleOk()">确定</button>
+        <button nz-button nzType="default" nzSize="small" (click)="handleCancel()">取消</button>
+      </ng-template>
+    </nz-modal>
+
+  </div>
+  <nz-table
+    #rowSelectionTable
+    [nzData]="secondCategoryViewModel.secondCategories"
+    [nzLoading]="isLoading"
+    [nzScroll]="{ x: '1000px',y: '340px' }"
+    [nzPageSize]="pageSize"
+    [nzPageIndex] = "currpageIndex"
+    [nzFrontPagination]="false"
+    [nzTotal]="secondCategoryViewModel.totalCount"
+    (nzCurrentPageDataChange)="currentPageDataChange($event)"
+    (nzPageIndexChange)="pageIndexChange($event)">
+    <thead>
+      <tr>
+        <th nzWidth="40px" nzShowCheckbox [(nzChecked)]="allChecked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="checkAll($event)"></th>
+        <th nzWidth="180px">分类名称</th>
+        <th nzWidth="180px">创建时间</th>
+        <th nzWidth="120px">文章数</th>
+        <th nzWidth="120px">大分类</th>
+        <th nzWidth="120px">状态</th>
+        <th nzWidth="120px">操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of rowSelectionTable.data">
+        <td nzShowCheckbox [(nzChecked)]="data.checked" (nzCheckedChange)="refreshStatus()"></td>
+        <td>
+          <a (click)="createComponentModal(data)">{{data.secondCategoryName}}</a>
+        </td>
+        <td>{{data.createDate | date:"yyyy-MM-dd"}}</td>
+        <td>{{data.postCount}}</td>
+        <td>
+          {{data.firstCategory.firstCategoryName}}
+        </td>
+        <td>
+          {{data.status | ConvertStatus}}
+        </td>
+        <td>
+          <button *ngIf="data.status == 1" (click)="deleteSecondCategory(data)" nz-button nzSize="small" nzType="danger" nzGhost>删除</button>
+          <button *ngIf="data.status != 1" (click)="recoverySecondCategoryStatus(data)" nz-button nzSize="small" nzType="primary" nzGhost>恢复</button>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>

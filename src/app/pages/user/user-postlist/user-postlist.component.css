@@ -1,0 +1,12 @@
+.user-space-body-container{
+  background-color: #fff;
+  padding: 0 10px;
+  min-height: 400px;
+}
+.post-list-pagenation{
+  text-align: center;
+  margin-bottom: 10px;
+}
+.post-title-save{
+  color: deeppink;
+}

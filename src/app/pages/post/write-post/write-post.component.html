@@ -1,0 +1,21 @@
+<nz-spin [nzSpinning]="isSpinning" nzTip="加载中...">
+  <div class="write-post-container">
+    <div class="write-post-title">
+      <input nz-input placeholder="标题" [(ngModel)]="postInfo.postTitle">
+    </div>
+    <div class="write-post-category">
+      <nz-select style="width: 200px;" [(ngModel)]="postInfo.secondCategory.secondCategoryId" nzPlaceHolder="请选择分类">
+        <nz-option *ngFor="let option of secondCategories" [nzLabel]="option.secondCategoryName" 
+            [nzValue]="option.secondCategoryId"></nz-option>
+      </nz-select>
+    </div>
+    <div class="write-post-editor-container">
+      <div class="editor-zone">
+        <ckeditor [(ngModel)]="postInfo.postContent"  [config]="config"></ckeditor>
+      </div>
+      <button nz-button nzType="primary" class="write-post-subcancel-btn" (click)="savePost()">保存</button>
+      <button nz-button nzType="primary" class="write-post-subcancel-btn" (click)="doSubmit()">发布</button>
+      <button nz-button nzType="primary" class="write-post-subcancel-btn" (click)="cancel()">取消</button>
+    </div>
+  </div>
+</nz-spin>

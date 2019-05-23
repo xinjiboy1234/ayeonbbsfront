@@ -1,0 +1,55 @@
+.reply-zone{
+    border-top: 1px solid #c4c4c4;
+    margin:10px 0;
+    padding: 10px 0 0 0;
+}
+.innter-reply-zone{
+    margin: 10px 0;
+    border-top: 1px solid #c4c4c4;
+    padding: 10px 0 0 0;
+}
+.reply-description-zone{
+    font-size: 12px;
+    line-height: 14px;
+}
+.innerPagenation{
+    text-align: center;
+    margin: 15px 0;
+}
+.Pagenation{
+    text-align: center;
+    margin: 10px 0 20px 0;
+}
+.reply-username{
+    font-weight: bold;
+}
+.reply-description-zone :hover{
+    color: #1890ff;
+}
+:host ::ng-deep .ck.ck-toolbar{
+    border: 0px;
+    border-bottom: 1px solid #c4c4c4;
+}
+:host ::ng-deep .ck-content{
+    min-height: 200px;
+}
+.editor-zone{
+    color: #000;
+    border: #c4c4c4 solid 1px;
+    border-radius: 3px;
+}
+:host ::ng-deep .editor-zone p{
+    margin: 0px;
+}
+.post-detail-subcancel-btn{
+    margin-right: 10px;
+    margin-top: 3px;
+}
+.reply-content-zone{
+    margin-top: 5px;
+}
+
+:host ::ng-deep .reply-content-zone p{
+    color: #353535;
+    margin: 0px;
+}

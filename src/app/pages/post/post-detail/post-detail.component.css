@@ -1,0 +1,50 @@
+.author-info-zone{
+    margin: 10px 0;
+    line-height: 25px;
+}
+.author-info-zone :hover{
+    color: #1890ff;
+}
+.post-detail-zone{
+    background-color: #fff;
+    padding: 10px 15px;
+}
+.post-title{
+    font-weight: bold;
+}
+.post-content{
+    border-bottom: 1px solid #c4c4c4;
+    padding-bottom: 15px;
+}
+:host ::ng-deep .post-content p{
+    color: #353535;
+    margin-bottom: 0px;
+}
+.reply-zone-title{
+    font-weight: bold;
+}
+.postdetial-reply-zone{
+    margin-top: 15px;
+}
+:host ::ng-deep .image-style-align-left{
+    max-width: 1000px;
+}
+:host ::ng-deep .image-style-align-left img{
+    float: left;
+    width: 30%;
+}
+:host ::ng-deep .image-style-align-right{
+    max-width: 1000px;
+}
+:host ::ng-deep .image-style-align-right img{
+    float: right;
+    width: 30%;
+}
+
+:host ::ng-deep .image{
+    /* min-height: 200px; */
+    max-width: 1000px;
+}
+:host ::ng-deep .image img{
+    max-width: 1000px;
+}

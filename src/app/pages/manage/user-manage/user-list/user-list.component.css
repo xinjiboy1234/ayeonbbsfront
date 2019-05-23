@@ -1,0 +1,19 @@
+.body-container{
+    background-color: #fff;
+    padding: 24px;
+}
+.ant-advanced-search-form{
+    text-align: left;
+}
+.btn-style{
+    margin-left: 10px;
+}
+.ant-advanced-search-form .ant-form-item{
+    margin-bottom: 16px;
+}
+.inquery-panel-btn{
+    margin-right: 8px;
+}
+.formcontrol-select-style{
+    width: 150px;
+}

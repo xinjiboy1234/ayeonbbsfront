@@ -1,0 +1,48 @@
+:host {
+  text-align: center;
+}
+
+:host ::ng-deep .ant-layout-header{
+  background: #fff;
+  box-shadow: #adafb3 0px 0px 5px;
+}
+
+:host ::ng-deep .ant-layout-footer {
+  line-height: 1.5;
+}
+
+:host ::ng-deep .ant-layout-sider {
+  max-width: 240px !important;
+  width: 240px !important;
+  flex: 0 0 240px !important;
+  color: #fff;
+}
+
+:host ::ng-deep .ant-layout-content {
+  min-height: 120px;
+}
+
+:host > ::ng-deep .ant-layout {
+  margin-bottom: 48px;
+}
+
+:host ::ng-deep .ant-layout:last-child {
+  margin: 0;
+}
+.logo-container{
+    line-height: 64px;
+    background-color: #002140;
+}
+.menu-container{
+  text-align: left;
+}
+.sidebar{
+  box-shadow: #adafb3 2px 0px 5px;
+}
+.main-container{
+  min-height: 100vh;
+}
+.content-container{
+  margin: 10px 24px;
+}
+

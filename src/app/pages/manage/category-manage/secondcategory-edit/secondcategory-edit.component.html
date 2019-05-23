@@ -1,0 +1,8 @@
+<div nz-row nzType="flex" nzJustify="center">
+  <div nz-col nzSpan="16">
+    <nz-select name="firstcategory" nzPlaceHolder="一级分类" style="width:100%;margin-bottom: 10px;" class="formcontrol-select-style" [(ngModel)]="secondCategory.firstCategory.firstCategoryId">
+      <nz-option *ngFor="let item of firstCategories" [nzLabel]="item.firstCategoryName" [nzValue]="item.firstCategoryId"></nz-option>
+    </nz-select>
+    <input nz-input id="secondCategoryName" name="secondCategoryName" placeholder="分类名称" nzrequired [(ngModel)]="secondCategory.secondCategoryName">
+  </div>
+</div>

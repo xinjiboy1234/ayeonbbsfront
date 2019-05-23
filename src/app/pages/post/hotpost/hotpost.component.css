@@ -1,0 +1,19 @@
+.hot-post-content{
+    padding: 0 10px;
+}
+:host ::ng-deep .hot-post-content .ant-list-vertical .ant-list-item-meta-title{
+    margin-bottom: 0px;
+}
+:host ::ng-deep .hot-post-content .ant-list-vertical .ant-list-item-meta{
+    margin-bottom: 0px;
+}
+.author-description{
+    font-size: 14px;
+}
+:host ::ng-deep .hot-post-content .ant-list-header h4{
+    margin: 0px;
+    font-weight: bold;
+}
+.post-title{
+    color:#000;
+}

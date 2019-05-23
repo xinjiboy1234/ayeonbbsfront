@@ -1,0 +1,44 @@
+<div class="user-space-body-container">
+  <nz-tabset [nzSize]="large">
+    <nz-tab [nzTitle]="'文章 ('+postViewModel.totalCount+')'">
+      <div nz-row>
+        <div nz-col class="gutter-row">
+          <nz-list style="background-color: #fff;padding: 0 10px;"
+              [nzDataSource]="postViewModel.posts"
+              [nzItemLayout]="'vertical'"
+              [nzRenderItem]="item"
+              [nzPagination]="pagination">
+             <ng-template #item let-item>
+              <nz-list-item [nzContent]="item.postContent">
+                <nz-list-item-meta
+                  [nzTitle]="nzTitle"
+                  [nzDescription]="nzDescription">
+                  <ng-template #nzTitle>
+                    <a *ngIf="item.status==1" [routerLink] = "['/main/post-detail', item.postId]" class="post-title">{{item.postTitle}}</a>
+                    <a *ngIf="item.status==2" [routerLink] = "['/main/post-edit', item.postId]" class="post-title-save">{{item.postTitle}}</a>
+                  </ng-template>
+                  <ng-template #nzDescription>
+                    <div class="author-description">
+                      分类: <nz-tag nzColor="purple">{{item.secondCategory.secondCategoryName}}</nz-tag>
+                      作者：<span>{{item.author.nickName}}</span><span style="margin-left: 10px;">{{item.createDate | date: "yyyy-MM-dd"}}</span> 发布
+                        &nbsp;&nbsp;&nbsp;
+                      <i nz-icon type="like-o" class="content-bottm-badge"></i> {{item.postGoodCount}} 
+                        &nbsp;&nbsp;
+                      <i nz-icon type="message" class="content-bottm-badge"></i> {{item.replyCount}}
+                      <button nz-button [nzSize]="small" style="width:45px;height: 22px;padding: 0px;font-size: 12px; margin: 5px" 
+                          nzType="default" (click)="deletePostInfo(item)" *ngIf="userSpaceViewModel.isLogin">删除
+                      </button>
+                    </div>
+                  </ng-template>
+                </nz-list-item-meta>
+              </nz-list-item>
+            </ng-template>
+            <br>
+            <nz-pagination [nzPageIndex]="currentPage" [nzPageSize]="pageSize" [nzTotal]="postViewModel.totalCount" (nzPageIndexChange)="pageIndexChange($event)" class="post-list-pagenation"></nz-pagination>
+            <br>
+          </nz-list>
+        </div>
+      </div>
+    </nz-tab>
+  </nz-tabset>
+</div>

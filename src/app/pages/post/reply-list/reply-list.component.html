@@ -1,0 +1,86 @@
+<nz-spin nzTip="加载中..." [nzSpinning]="outSpinning">
+  <div nz-row nzType="flex" nzJustify="start" class="reply-zone" 
+      *ngFor="let rpdata of replyViewModel.replyInfoViewModels let idx = index" [attr.data-index]="idx">
+    <div nz-col nzLg="2">
+      <nz-avatar *ngIf="rpdata?.replyUser?.avatar" [nzSize]="56" nzIcon="user" class="avatar" [nzSrc]="baseUrl+rpdata?.replyUser?.avatar"></nz-avatar>
+      <nz-avatar *ngIf="!rpdata?.replyUser?.avatar" [nzSize]="56" nzIcon="user" class="avatar"></nz-avatar>
+    </div>
+    <div nz-col nzLg="22">
+      <div class="reply-user-info-zone">   
+        <div>
+          <span class="reply-username">
+            <a [routerLink]="['/main/user/space/', rpdata.replyUser.userId]">{{rpdata.replyUser.nickName}}</a>
+          </span>
+        </div>
+        <div class="reply-description-zone">{{rpdata.replyDate | date: "yyyy-MM-dd HH:mm:ss"}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <i *ngIf="rpdata.replyGood?.goodsId > 0" nz-icon type="like" [nzTheme]="'fill'" (click)="deleteReplyGood(rpdata, idx)"></i>
+          <i *ngIf="rpdata.replyGood?.goodsId <= 0" nz-icon type="like-o" (click)="addReplyGood(rpdata, idx)"></i>
+            {{rpdata.replyGoodCount}}
+          <nz-divider nzType="vertical"></nz-divider>
+          <i nz-icon type="message" (click)="innerReplyClick(rpdata.replyId,'rpeditor')"></i> {{rpdata.innerReplyCount}}
+        </div>
+      </div>
+      <div class="reply-content-zone">
+        <div [innerHTML]="rpdata.replyContent | sanitizeHtml"></div>
+        <!-- 内嵌回复区 -->
+        <div *ngIf="rpdata.replyInfoViewModels.length > 0">
+          <div class="innter-reply-zone" *ngFor="let item of rpdata.replyInfoViewModels let inIdx = index" [attr.data-index]="inIdx">
+            <div nz-row nzType="flex" nzJustify="start">
+              <div nz-col nzLg="1">
+                <nz-avatar *ngIf="item?.replyUser?.avatar" [nzSize]="small" nzIcon="user" class="avatar" [nzSrc]="baseUrl+item?.replyUser?.avatar"></nz-avatar>
+                <nz-avatar *ngIf="!item?.replyUser?.avatar" [nzSize]="small" nzIcon="user" class="avatar"></nz-avatar>
+              </div>
+              <div nz-col nzLg="23">
+                <div class="reply-user-info-zone">
+                  <div *ngIf="!item.repliedUserInfo">
+                    <span class="reply-username">
+                        <a [routerLink]="['/main/user/space/', item.replyUser.userId]">{{item.replyUser.nickName}}</a>
+                    </span>
+                  </div>
+                  <div *ngIf="item.repliedUserInfo">
+                    <span class="reply-username">
+                      <a [routerLink]="['/main/user/space/', item.replyUser.userId]">{{item.replyUser.nickName}}</a>
+                    </span> @ 
+                    <span class="reply-username">{{item.repliedUserInfo.nickName}}</span>
+                  </div>
+                  <div class="reply-description-zone">{{item.replyDate | date: "yyyy-MM-dd HH:mm:ss"}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <i *ngIf="item.replyGood?.goodsId > 0" nz-icon type="like" [nzTheme]="'fill'" (click)="deleteInnerReplyGood(item, idx, inIdx)"></i>
+                    <i *ngIf="item.replyGood?.goodsId <= 0" nz-icon type="like-o" (click)="addInnerReplyGood(item, idx, inIdx)"></i>
+                      {{item.replyGoodCount}}
+                    <nz-divider nzType="vertical"></nz-divider>
+                    <i nz-icon type="message" (click)="replyToReplyClick(rpdata.replyId ,item.replyUser, item.replyId,'rpeditor')"></i> 
+                      {{item.innerReplyCount}}
+                  </div>
+                </div>
+                <div class="reply-content-zone">
+                  <div [innerHTML]="item.replyContent | sanitizeHtml"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="innerPagenation" *ngIf="rpdata.innerReplyCount > 5">
+          <nz-pagination [nzPageIndex]="innerCurrentPage" [nzTotal]="rpdata.innerReplyCount" [nzPageSize]="5" [nzSize]="'small'" (nzPageIndexChange)="innerChangePageIndex($event, idx)" class="Pagenation"></nz-pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+</nz-spin>
+<div class="Pagenation" *ngIf="replyViewModel.replyTotalCount > 5">
+  <nz-pagination [nzPageIndex]="currentPage" [nzTotal]="replyViewModel.replyTotalCount" [nzPageSize]="5" class="Pagenation" [nzSize]="'small'" (nzPageIndexChange)="changePageIndex($event)"></nz-pagination>
+</div>
+<div>
+  <div>
+    <div style="margin: 20px 0 10px 0; font-weight: bold; display: block" *ngIf="showReplyUserRelate.length > 0">
+      {{showReplyUserRelate}}
+      <a (click)="cancelRelate()">取消</a>
+    </div>
+  </div>
+  <nz-spin nzTip="加载中 ..." [nzSpinning]="isSpinning">
+    <div class="editor-zone" id="rpeditor">
+      <ckeditor [(ngModel)]="replyInfo.replyContent" [config]="config"></ckeditor>
+    </div>
+    <button nz-button nzType="primary" [disabled]="isDisabled" class="post-detail-subcancel-btn" (click)="addReplyInfo()">提交</button>
+    <!-- <button nz-button nzType="primary" class="post-detail-subcancel-btn">取消</button> -->
+  </nz-spin>
+</div>

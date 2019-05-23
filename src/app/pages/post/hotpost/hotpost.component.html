@@ -1,0 +1,29 @@
+<div class="hot-post-content">
+  <nz-list [nzDataSource]="hotPostData" [nzRenderItem]="item" [nzItemLayout]="'vertical'" [nzHeader] = "nzHeader">
+    <ng-template #nzHeader>
+      <h4>热门文章</h4>
+    </ng-template>
+    <ng-template #item let-item>
+      <nz-list-item>
+        <nz-list-item-meta
+          [nzTitle]="nzTitle"
+          [nzDescription]="nzDescription">
+          <ng-template #nzTitle>
+            <a [routerLink] = "['/main/post-detail', item.postId]" class="post-title">{{item.postTitle }}</a>
+          </ng-template>
+          <ng-template #nzDescription>
+            <div class="author-description">
+              作者：<span><a [routerLink]="['/main/user/space/', item.author.userId]">{{item.author.nickName}}</a></span><span style="margin-left: 10px;">{{item.createDate | date: "yyyy-MM-dd"}}</span> 发布<br>
+              分类: <nz-tag nzColor="magenta">{{item.secondCategory.secondCategoryName}}</nz-tag>
+              <i nz-icon type="like-o" class="content-bottm-badge"></i> {{item.postGoodCount}} 
+                &nbsp;&nbsp;
+              <i nz-icon type="message" class="content-bottm-badge"></i> {{item.replyCount}}
+              &nbsp;&nbsp;
+              <i nz-icon type="eye" class="content-bottm-badge"></i> {{item.watch}}
+            </div>
+          </ng-template>
+        </nz-list-item-meta>
+      </nz-list-item>
+    </ng-template>
+  </nz-list>
+</div>

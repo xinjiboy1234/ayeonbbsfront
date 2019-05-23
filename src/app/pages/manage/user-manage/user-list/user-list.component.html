@@ -1,0 +1,69 @@
+<div class="body-container">
+  <div style="margin-bottom: 16px;">
+    <div>
+      <form nz-form [formGroup]="validateForm" [nzLayout]="'inline'" class="ant-advanced-search-form">
+        <nz-form-item>
+          <nz-form-label nzFor="nickName">昵称</nz-form-label>
+          <nz-form-control>
+            <input nz-input placeholder="昵称" formControlName="nickName" >
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label nzFor="userStatus">状态</nz-form-label>
+          <nz-form-control>
+            <nz-select [nzMaxTagPlaceholder]="tagPlaceHolder" nzAllowClear="true" formControlName="userStatus" nzPlaceHolder="状态" class="formcontrol-select-style">
+              <nz-option nzLabel="使用" nzValue="1"></nz-option>
+              <nz-option nzLabel="删除" nzValue="3"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+        <div nz-row>
+          <div nz-col [nzSpan]="24" style="text-align: left;">
+            <button nz-button [nzType]="'primary'" nzSize="small" class="inquery-panel-btn" routerLink="/manage/user/user-add">添加</button>
+            <button nz-button [nzType]="'primary'" nzSize="small" class="inquery-panel-btn" (click)="inQuery()">查询</button>
+            <button nz-button [nzType]="'primary'" nzSize="small" class="inquery-panel-btn" (click)="multyDeleteUser()">删除</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <nz-table
+    #rowSelectionTable
+    [nzData]="userManageViewModel.users"
+    [nzLoading]="isLoading"
+    [nzScroll]="{ x: '1000px',y: '340px' }"
+    [nzPageSize]="10"
+    [nzFrontPagination]="false"
+    [nzPageIndex] = "currpageIndex"
+    [nzTotal]="userManageViewModel.totalCount"
+    (nzCurrentPageDataChange)="currentPageDataChange($event)"
+    (nzPageIndexChange)="pageIndexChange($event)">
+    <thead>
+      <tr>
+        <th nzWidth="40px" nzShowCheckbox [(nzChecked)]="allChecked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="checkAll($event)"></th>
+        <th nzWidth="220px">昵称</th>
+        <th nzWidth="120px">创建时间</th>
+        <th nzWidth="120px">管理权限</th>
+        <th nzWidth="120px">发布权限</th>
+        <th nzWidth="120px">发布文章数</th>
+        <th nzWidth="120px">状态</th>
+        <th nzWidth="120px">操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of rowSelectionTable.data">
+        <td nzShowCheckbox [(nzChecked)]="user.checked" (nzCheckedChange)="refreshStatus()"></td>
+        <td> <a [routerLink]="[ '/manage/user/user-edit', user.userId ]">{{user.nickName}}</a></td>
+        <td>{{user.createDate | date: "yyyy-MM-dd"}}</td>
+        <td>{{user.postManageCount}}</td>
+        <td>{{user.publishCategoryCount}}</td>
+        <td>{{user.postCount}}</td>
+        <td>{{user.status | ConvertStatus}}</td>
+        <td>
+          <button *ngIf="user.status == 1" (click)="deleteUser(user)" nz-button nzSize="small" nzType="danger" nzGhost>删除</button>
+          <button *ngIf="user.status != 1" (click)="recoveryUserStatus(user)" nz-button nzSize="small" nzType="primary" nzGhost>恢复</button>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>

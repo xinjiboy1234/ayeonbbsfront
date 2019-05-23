@@ -1,0 +1,25 @@
+<div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 16, lg: 16, xl: 16, xxl: 8 }">
+  <div nz-col nzSpan="6" class="gutter-row">
+    <div class="user-space-account-container">
+      <nz-avatar *ngIf="userSpaceViewModel?.userInfo?.avatar" [nzSize]="72" nzIcon="user" class="avatar" [nzSrc]="avatarPath"></nz-avatar>
+      <nz-avatar *ngIf="!userSpaceViewModel?.userInfo?.avatar" [nzSize]="72" nzIcon="user" class="avatar"></nz-avatar>
+      <h3>{{userSpaceViewModel.userInfo.nickName}}</h3>
+      <div class="user-description">
+        赞 <i nz-icon [type]="'like'"></i> {{userSpaceViewModel.postGoodCount}} &nbsp;
+        回复 <i nz-icon [type]="'message'"></i> {{userSpaceViewModel.replyCount}}
+      </div>
+      <div style="margin-top: 10px" *ngIf="userSpaceViewModel.isLogin">
+        <button nz-button nzType="primary" nzSize="small" nzGhost="true"  routerLink="/main/user/user-edit">编辑</button>
+      </div>
+      <nz-divider nzDashed="true"></nz-divider>
+      <div class="category-container">
+          <nz-tag *ngFor="let sc of userSpaceViewModel.secondCategories" style="margin: 0px 5px 10px 5px">
+            {{sc.secondCategoryName}}
+          </nz-tag>
+      </div>
+    </div>
+  </div>
+  <div nz-col nzSpan="18" class="gutter-row">
+    <router-outlet></router-outlet>
+  </div>
+</div>

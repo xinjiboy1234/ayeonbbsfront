@@ -1,0 +1,49 @@
+<div class="body-container">
+  <div style="margin-bottom: 16px;">
+    <div>
+      <form nz-form [formGroup]="validateForm" [nzLayout]="'inline'" class="ant-advanced-search-form">
+        <nz-form-item>
+          <nz-form-label nzFor="categoryName">板块</nz-form-label>
+          <nz-form-control>
+            <input nz-input placeholder="板块" formControlName="categoryName" >
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label nzFor="nickName">管理员</nz-form-label>
+          <nz-form-control>
+            <input nz-input placeholder="管理员" formControlName="nickName" >
+          </nz-form-control>
+        </nz-form-item>
+        <div nz-row>
+          <div nz-col [nzSpan]="24" style="text-align: left;">
+            <button nz-button [nzType]="'primary'" nzSize="small" class="inquery-panel-btn">查询</button>
+            <!-- <button nz-button [nzType]="'primary'" class="inquery-panel-btn">封杀</button> -->
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <nz-table
+    #rowSelectionTable
+    [nzData]="dataSet"
+    (nzCurrentPageDataChange)="currentPageDataChange($event)"
+    (nzPageIndexChange)="refreshStatus()"
+    (nzPageSizeChange)="refreshStatus()">
+    <thead>
+      <tr>
+        <th>分类</th>
+        <th>创建时间</th>
+        <th>编辑时间</th>
+        <th>管理员</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of rowSelectionTable.data">
+        <td>{{data.name}}</td>
+        <td>{{data.age}}</td>
+        <td>{{data.age}}</td>
+        <td>{{data.address}}</td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>

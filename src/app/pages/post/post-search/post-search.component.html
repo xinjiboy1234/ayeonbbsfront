@@ -1,0 +1,50 @@
+<!-- 帖子区域 -->
+<nz-spin [nzSpinning]="isSpinning" nzTip="加载中...">
+  <div>
+    <div nz-row nzJustify="center" nzType="flex">
+      <div nz-col nzSpan="24" class="gutter-row">
+        <div *ngIf="secondCategoryList.length" class="second-category-container">
+          <span *ngFor="let sc of secondCategoryList; let idx = index" [attr.data-index]="idx">
+            <a [routerLink] = "['/main/plist/category', sc.firstCategory.firstCategoryId, sc.secondCategoryId, 1]" 
+              class="second-category-style">{{sc.secondCategoryName}}</a>
+            <!-- 最后一个竖线不显示 -->
+            <nz-divider nzType="vertical" *ngIf="(idx+1) < secondCategoryList.length"></nz-divider>
+          </span>
+        </div>
+        <nz-list style="background-color: #fff;padding: 0 10px;"
+            [nzDataSource]="postViewModel.posts"
+            [nzItemLayout]="'vertical'"
+            [nzRenderItem]="item"
+            [nzPagination]="pagination">
+          <ng-template #item let-item>
+            <nz-list-item>
+              <nz-list-item-meta
+                [nzTitle]="nzTitle"
+                [nzDescription]="nzDescription">
+                <ng-template #nzTitle>
+                    <a [routerLink] = "['/main/post-detail', item.postId]" class="post-title">{{item.postTitle}}</a>
+                </ng-template>
+                <ng-template #nzDescription>
+                  <div class="author-description">分类: <nz-tag nzColor="green">{{item.secondCategory.secondCategoryName}}</nz-tag> 
+                    作者：<span>{{item.author.nickName}}</span><span style="margin-left: 10px;">{{item.createDate | date: "yyyy-MM-dd"}}</span> 发布
+                      &nbsp;&nbsp;&nbsp;
+                    <i nz-icon type="like" class="content-bottm-badge" [nzTheme]="'fill'" *ngIf="item.postGood?.goodsId > 0"></i> 
+                    <i nz-icon type="like-o" class="content-bottm-badge" *ngIf="item.postGood?.goodsId <= 0"></i> 
+                      {{item.postGoodCount}} 
+                      &nbsp;&nbsp;
+                    <i nz-icon type="message" class="content-bottm-badge"></i> {{item.replyCount}}
+                    &nbsp;&nbsp;
+                    <i nz-icon type="eye" class="content-bottm-badge"></i> {{item.whatch}}
+                  </div>
+                </ng-template>
+              </nz-list-item-meta>
+            </nz-list-item>
+          </ng-template>
+          <br>
+          <nz-pagination [nzPageIndex]="currentPage" [nzPageSize]="pageSize" [nzTotal]="postViewModel.totalCount" (nzPageIndexChange)="changePageIndex($event)" class="post-list-pagenation"></nz-pagination>
+          <br>
+        </nz-list>
+      </div>
+    </div>
+  </div>
+</nz-spin>

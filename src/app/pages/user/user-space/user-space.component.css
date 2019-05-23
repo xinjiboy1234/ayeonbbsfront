@@ -1,0 +1,40 @@
+:host ::ng-deep .ant-list-vertical .ant-list-item-meta-title{
+    margin-bottom: 5px;
+}
+:host ::ng-deep .ant-list-vertical .ant-list-item-meta{
+  margin-bottom: 5px;
+}
+:host ::ng-deep.ant-list-vertical .ant-list-item-content{
+  margin-bottom: 0px;
+}
+.user-space-account-container{
+    text-align: center;
+    background-color:#fff;
+    padding: 0 10px;
+}
+.avatar{
+    margin: 24px 0;
+}
+.user-description{
+    padding-top: 10px;
+}
+.content-bottm-badge{
+    margin-right: 0px;
+}
+.content-bottm-badge:hover{
+    color: #1890ff;
+}
+.post-title{
+  /* font-weight: bold; */
+  color: #000;
+}
+.category-container{
+    padding-bottom: 24px;
+}
+.author-description{
+    line-height: 22px;
+}
+
+button{
+    margin-left: 8px;
+}

@@ -1,0 +1,104 @@
+<nz-spin [nzSpinning]="isSpinning" nzTip="Loading...">
+<div class="body-container" nz-row nzType="flex" nzJustify="center">
+  <div nz-col nzLg="8" nzMd="8" nzXs="24" nzSm="24" class="form-container">
+    <form nz-form [formGroup]="validateForm">
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="loginId">用户名</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzHasFeedback="true">
+          <input nz-input formControlName="loginId" id="loginId">
+          <nz-form-explain
+            *ngIf="(validateForm.get('loginId')?.dirty && validateForm.get('loginId')?.errors) ||
+              validateForm.get('loginId')?.pending">
+            <ng-container *ngIf="validateForm.get('loginId')?.hasError('required')">请填写用户名!</ng-container>
+            <ng-container *ngIf="validateForm.get('loginId')?.hasError('regexError')">用户名必须6-18位，并且只能是数字，字母或下划线!</ng-container>
+            <ng-container *ngIf="validateForm.get('loginId')?.hasError('exist')">用户名已存在!</ng-container>
+            <ng-container *ngIf="validateForm.get('loginId')?.pending">
+              Validating...
+            </ng-container>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="password" nzRequired>密码</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzHasFeedback="true">
+          <input nz-input type="password" id="password" formControlName="password" (ngModelChange)="updateConfirmValidator()">
+          <nz-form-explain *ngIf="validateForm.get('password')?.dirty && validateForm.get('password')?.errors">
+            <ng-container *ngIf="validateForm.get('password')?.hasError('required')">
+              请填写密码
+            </ng-container>
+            <ng-container *ngIf="validateForm.get('password')?.hasError('passwordLenError')">
+              密码必须6位以上
+            </ng-container>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="checkPassword" nzRequired>确认密码</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzHasFeedback="true">
+          <input nz-input type="password" formControlName="checkPassword" id="checkPassword">
+          <nz-form-explain *ngIf="validateForm.get('checkPassword').dirty && validateForm.get('checkPassword').errors">
+            <ng-container *ngIf="validateForm.get('checkPassword').hasError('required')">
+              请确认密码!
+            </ng-container>
+            <ng-container *ngIf="validateForm.get('checkPassword').hasError('confirm')">
+              2次输入密码不匹配!
+            </ng-container>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="nickName" nzRequired>
+          <span>
+            昵称:
+            <i nz-icon nz-tooltip nzTitle="网络虚拟名称" type="question-circle" theme="outline"></i>
+          </span>
+        </nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzHasFeedback="true">
+          <input nz-input id="nickName" formControlName="nickName">
+          <nz-form-explain *ngIf="validateForm.get('nickName')?.dirty && validateForm.get('nickName')?.errors ||
+          validateForm.get('loginId')?.pending">
+            <ng-container *ngIf="validateForm.get('nickName')?.hasError('required')">
+              请输入昵称
+            </ng-container>
+            <ng-container *ngIf="validateForm.get('nickName')?.hasError('nickNameExist')">
+              昵称已存在
+            </ng-container>
+            <ng-container *ngIf="validateForm.get('nickName')?.pending">
+              Validating...
+            </ng-container>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="email" nzRequired>
+          邮箱
+        </nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzHasFeedback="true">
+          <input nz-input id="email" formControlName="email">
+          <nz-form-explain *ngIf="validateForm.get('email')?.dirty && validateForm.get('email')?.errors ||
+          validateForm.get('loginId')?.pending">
+            <ng-container *ngIf="validateForm.get('email')?.hasError('required')">
+              请填写邮箱
+            </ng-container>
+            <ng-container *ngIf="validateForm.get('email')?.hasError('email')">
+              邮箱格式不合法
+            </ng-container>
+            <ng-container *ngIf="validateForm.get('email')?.hasError('emailExist')">
+              此邮箱已注册
+            </ng-container>
+            <ng-container *ngIf="validateForm.get('email')?.pending">
+              Validating...
+            </ng-container>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control [nzOffset]="7" [nzSpan]="12">
+          <button nz-button nzType="primary" [disabled]="!validateForm.valid" (click)="saveData()">提交</button>
+          <button nz-button style="margin-left: 8px" (click)="resetForm($event)">重置</button>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+</nz-spin>

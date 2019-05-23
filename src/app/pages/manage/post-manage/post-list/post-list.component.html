@@ -1,0 +1,87 @@
+<div class="body-container">
+  <div style="margin-bottom: 16px;">
+      <form nz-form [formGroup]="validateForm" [nzLayout]="'inline'" class="ant-advanced-search-form">
+        <nz-form-item>
+          <nz-form-label nzFor="postTitle">标题</nz-form-label>
+          <nz-form-control>
+            <input nz-input placeholder="标题" formControlName="postTitle" >
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label nzFor="postStatus">状态</nz-form-label>
+          <nz-form-control>
+            <nz-select [nzAllowClear]="true"
+                formControlName="postStatus"  class="select-control-style"
+                nzPlaceHolder="状态">
+              <nz-option nzLabel="发布" nzValue="1"></nz-option>
+              <nz-option nzLabel="删除" nzValue="3"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label nzFor="secondCategory">分类</nz-form-label>
+          <nz-form-control>
+            <nz-select [nzMaxTagCount]="1" [nzMaxTagPlaceholder]="tagPlaceHolder" class="select-control-style"
+                  formControlName="secondCategory"  nzMode="multiple" [nzAllowClear]="true" nzPlaceHolder="分类">
+              <nz-option *ngFor="let sc of secondCategories" [nzLabel]="sc.secondCategoryName" [nzValue]="sc.secondCategoryId"></nz-option>
+            </nz-select>
+            <ng-template #tagPlaceHolder let-selectedList>
+              等...
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+        <div nz-row>
+          <div nz-col [nzSpan]="24" style="text-align: left;">
+            <button nz-button [nzType]="'primary'" nzSize="small" class="inquery-panel-btn" (click)="inQuery()">查询</button>
+            <button nz-button [nzType]="'primary'" nzSize="small" class="inquery-panel-btn" (click)="psotMultyDelete()">删除</button>
+            <!-- <a style="margin-left:8px;font-size:12px;" (click)="toggleCollapse()">
+              Collapse
+              <i nz-icon [type]="isCollapse?'down':'up'"></i>
+            </a> -->
+          </div>
+        </div>
+      </form>
+  </div>
+  <nz-table
+    #rowSelectionTable
+    [nzData]="postViewModel.posts"
+    [nzLoading]="isLoading"
+    [nzScroll]="{ x: '1000px',y: '340px' }"
+    [nzPageSize]="10"
+    [nzPageIndex] = "currpageIndex"
+    [nzFrontPagination]="false"
+    [nzTotal]="postViewModel.totalCount"
+    (nzCurrentPageDataChange)="currentPageDataChange($event)"
+    (nzPageIndexChange)="pageIndexChange($event)">
+    <thead>
+      <tr>
+        <th nzWidth="40px" nzShowCheckbox [(nzChecked)]="allChecked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="checkAll($event)"></th>
+        <th nzWidth="240px">标题</th>
+        <th nzWidth="120px">大分类</th>
+        <th nzWidth="120px">小分类</th>
+        <th nzWidth="120px">发表人</th>
+        <th nzWidth="120px">发表日期</th>
+        <th nzWidth="120px">状态</th>
+        <th nzWidth="220px">操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let post of rowSelectionTable.data">
+        <td nzShowCheckbox [(nzChecked)]="post.checked" (nzCheckedChange)="refreshStatus()"></td>
+        <td>{{post.postTitle}}</td>
+        <td>{{post.secondCategory.firstCategory.firstCategoryName}}</td>
+        <td>{{post.secondCategory.secondCategoryName}}</td>
+        <td>{{post.author.nickName}}</td>
+        <td>{{post.createDate | date: "yyyy-MM-dd"}}</td>
+        <td>{{post.status | ConvertPostStatus}}</td>
+        <td>
+          <button *ngIf="post.isTop != 1 && post.status != 2" (click)="setTop(post)" nz-button nzSize="small" nzType="primary" nzGhost>置顶</button>
+          <span *ngIf="post.isTop == 1 && post.status != 2" (click)="dropTop(post)" nz-button nzSize="small" nzType="danger" nzGhost>取消置顶</span>
+          <nz-divider nzType="vertical" *ngIf="post.status != 2"></nz-divider>
+          <span  *ngIf="post.status == 1" (click)="deletePost(post)" nz-button nzSize="small" nzType="danger" nzGhost>删除</span>
+          <span *ngIf="post.status != 1 && post.status != 2" (click)="recoveryPostStatus(post)" nz-button nzSize="small" nzType="primary" nzGhost>恢复</span>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>
